@@ -1,4 +1,4 @@
-# Minik Tabak web sayfaları
+# Annebek web sayfaları
 
 Bu klasör herkese açık bir GitHub deposuna (ör. `miniktabak-web`) olduğu gibi yüklenir.
 Depo > Settings > Pages > "Deploy from a branch" > `main` / `(root)`.
