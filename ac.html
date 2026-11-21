@@ -34,12 +34,13 @@ p{color:var(--sub);margin:6px 0}
 (function () {
   var q = new URLSearchParams(location.search);
   var safe = function (v) { return v && /^[A-Za-z0-9-]{1,64}$/.test(v) ? v : null; };
-  var u = safe(q.get('u')), e = safe(q.get('e'));
+  var u = safe(q.get('u')), e = safe(q.get('e')), s = safe(q.get('q'));
   var t = (q.get('t') || '').slice(0, 80);
-  var path = u ? 'uzman/' + u : e ? 'etkinlik/' + e : '';
+  var path = u ? 'uzman/' + u : e ? 'etkinlik/' + e : s ? 'soru/' + s : '';
   var kick = document.getElementById('kick'), title = document.getElementById('title'), desc = document.getElementById('desc');
   if (u) { kick.textContent = 'UZMANA DANIŞ'; title.textContent = t || 'Uzman randevusu'; desc.textContent = 'Online görüşme için randevu al, soru-cevap etkinliklerine katıl.'; }
   if (e) { kick.textContent = 'ETKİNLİK'; title.textContent = t || 'Annebek etkinliği'; desc.textContent = 'Etkinliğin ayrıntıları ve katılım Annebek uygulamasında.'; }
+  if (s) { kick.textContent = 'SORU-CEVAP'; title.textContent = t || 'Uzmanla canlı soru-cevap'; desc.textContent = 'Kayıt ve katılım bağlantısı Annebek uygulamasında.'; }
   if (t) document.title = t + ' · Annebek';
   var ua = navigator.userAgent || '';
   var android = /Android/i.test(ua), ios = /iPhone|iPad|iPod/i.test(ua);
