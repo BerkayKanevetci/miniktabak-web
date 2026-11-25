@@ -27,6 +27,7 @@ p{color:var(--sub);margin:6px 0}
   <a class="btn pri" id="open" href="#">Uygulamada aç</a>
   <a class="btn sec" id="play" href="https://play.google.com/store/apps/details?id=com.miniktabak.app">Google Play'den indir</a>
   <a class="btn sec" id="ios" href="https://apps.apple.com/app/id6837655660">App Store'dan indir</a>
+  <p id="kod" class="small" style="display:none">Davet kodu: <b></b> · Uygulamaya katılırken "Davet kodun var mı?" alanına yazın.</p>
   <p class="small">Uygulama yüklüyse "Uygulamada aç" sayfayı doğrudan açar. Yüklü değilse önce indirip sonra bu bağlantıya tekrar dokunun.</p>
 </div>
 <p class="small"><a href="./">Annebek hakkında</a> · <a href="gizlilik.html">Gizlilik</a></p>
@@ -36,6 +37,7 @@ p{color:var(--sub);margin:6px 0}
   var safe = function (v) { return v && /^[A-Za-z0-9-]{1,64}$/.test(v) ? v : null; };
   var u = safe(q.get('u')), e = safe(q.get('e')), s = safe(q.get('q'));
   var t = (q.get('t') || '').slice(0, 80);
+  var kod = q.get('kod') && /^[A-Za-z2-9]{6}$/.test(q.get('kod')) ? q.get('kod').toUpperCase() : null;
   var path = u ? 'uzman/' + u : e ? 'etkinlik/' + e : s ? 'soru/' + s : '';
   var kick = document.getElementById('kick'), title = document.getElementById('title'), desc = document.getElementById('desc');
   if (u) { kick.textContent = 'UZMANA DANIŞ'; title.textContent = t || 'Uzman randevusu'; desc.textContent = 'Online görüşme için randevu al, soru-cevap etkinliklerine katıl.'; }
@@ -46,6 +48,12 @@ p{color:var(--sub);margin:6px 0}
   var android = /Android/i.test(ua), ios = /iPhone|iPad|iPod/i.test(ua);
   if (android) document.getElementById('ios').style.display = 'none';
   if (ios) document.getElementById('play').style.display = 'none';
+  if (kod) {
+    // Uzmanın davet kodu: uygulamaya geçirilir ve sayfada gösterilir (uygulama yoksa anne kayıtta elle yazar)
+    path += '?kod=' + kod;
+    var k = document.getElementById('kod');
+    if (k) { k.style.display = 'block'; k.querySelector('b').textContent = kod; }
+  }
   var scheme = 'miniktabak://' + path;
   // Android: uygulama yoksa Play Store'a düşer
   var intent = 'intent://' + path + '#Intent;scheme=miniktabak;package=com.miniktabak.app;S.browser_fallback_url=' +
